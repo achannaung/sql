@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SQL Study Mind Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Mind map connections */
+    .connector {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .mindmap-node {
+      transition: box-shadow 0.2s;
+    }
+    .mindmap-node:hover {
+      box-shadow: 0px 8px 20px rgba(16, 78, 139, 0.18);
+      z-index: 10;
+    }
+    .fixed {
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-blue-50 to-purple-200 min-h-screen py-10">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-center text-4xl font-bold text-blue-900 mb-2">SQL Study Mind Map</h1>
+    <p class="text-center mb-8 text-lg text-gray-700">Visualizing the key concepts and pathways for learning SQL.</p>
+    <div class="relative" style="height: 850px;">
+      <!-- Center Node -->
+      <div id="center" class="mindmap-node absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border-4 border-blue-600 rounded-xl shadow-lg px-10 py-6 text-xl font-bold text-blue-800 flex flex-col items-center z-10">
+        <div>SQL</div>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/17317176-914f-4f1b-bc8b-c9df3f07542b.png" alt="Minimalist flat icon representing a database, with stacked blue cylinders, white highlights, and a modern vector style" width="64" height="64"
+        class="mt-2 rounded-full border border-blue-400 bg-blue-50"
+        onerror="this.style.display='none'; this.parentNode.style.background='#dbeafe';"/>
+      </div>
+
+      <!-- Nodes -->
+      <div id="node1" class="mindmap-node absolute" style="left:45%;top:9%;">
+        <div class="bg-white border-2 border-purple-400 rounded-lg shadow-md px-7 py-4 text-lg font-semibold text-purple-700">
+          Basics & Setup
+        </div>
+      </div>
+      <div id="node2" class="mindmap-node absolute" style="left:10%;top:28%;">
+        <div class="bg-white border-2 border-indigo-400 rounded-lg shadow-md px-5 py-4 w-60 font-semibold text-indigo-700">
+          <div>Data Querying</div>
+          <ul class="text-base font-normal ml-4 list-disc mt-2 text-indigo-600">
+            <li onclick="showCommandDetails('SELECT', 'SELECT column1, column2<br>FROM table_name<br>WHERE condition;', 'Retrieve data from database', 'SELECT, FROM, WHERE, GROUP BY', '=, <, >, LIKE, IN, BETWEEN')" class="cursor-pointer hover:text-indigo-800">SELECT, WHERE</li>
+            <li onclick="showCommandDetails('ORDER BY/LIMIT', 'SELECT column<br>FROM table<br>ORDER BY column ASC/DESC<br>LIMIT number;', 'Sort and limit results', 'ORDER BY, LIMIT', 'ASC, DESC, OFFSET')" class="cursor-pointer hover:text-indigo-800">ORDER BY, LIMIT</li>
+            <li onclick="showCommandDetails('Filtering Operators', 'SELECT column<br>FROM table<br>WHERE column IN (value1, value2);', 'Filter query results', 'WHERE', '=, <>, >, <, LIKE, IN, BETWEEN')" class="cursor-pointer hover:text-indigo-800">Filtering Operators</li>
+          </ul>
+        </div>
+      </div>
+      <div id="node3" class="mindmap-node absolute" style="left:6%;top:53%;">
+        <div class="bg-white border-2 border-blue-300 rounded-lg shadow-md px-5 py-4 w-60 font-semibold text-blue-700">
+          <div>Aggregations</div>
+          <ul class="text-base font-normal ml-4 list-disc mt-2 text-blue-600">
+            <li onclick="showCommandDetails('Aggregate Functions', 'SELECT COUNT(*), SUM(column), AVG(column)<br>FROM table;', 'Calculate summary statistics', 'COUNT, SUM, AVG, MIN, MAX', 'Used with GROUP BY')" class="cursor-pointer hover:text-blue-800">COUNT, SUM, AVG</li>
+            <li onclick="showCommandDetails('GROUP BY', 'SELECT column, COUNT(*)<br>FROM table<br>GROUP BY column;', 'Group results by column values', 'GROUP BY', 'Often used with aggregate functions')" class="cursor-pointer hover:text-blue-800">GROUP BY</li>
+            <li onclick="showCommandDetails('HAVING', 'SELECT column, COUNT(*)<br>FROM table<br>GROUP BY column<br>HAVING COUNT(*) > 5;', 'Filter grouped results', 'HAVING', 'Applied after GROUP BY')" class="cursor-pointer hover:text-blue-800">HAVING</li>
+          </ul>
+        </div>
+      </div>
+      <div id="node4" class="mindmap-node absolute" style="left:17%;top:78%;">
+        <div class="bg-white border-2 border-emerald-400 rounded-lg shadow-md px-5 py-4 w-60 font-semibold text-emerald-700">
+          <div>Joins & Relationships</div>
+          <ul class="text-base font-normal ml-4 list-disc mt-2 text-emerald-700">
+            <li onclick="showCommandDetails('JOINs', 'SELECT a.*, b.*<br>FROM table_a a<br>[INNER|LEFT|RIGHT|FULL] JOIN table_b b ON a.key = b.key;', 'Combine data from multiple tables', 'JOIN, ON', 'INNER, LEFT, RIGHT, FULL')" class="cursor-pointer hover:text-emerald-800">INNER, LEFT, RIGHT, FULL</li>
+            <li onclick="showCommandDetails('Foreign Keys', 'CREATE TABLE table1 (<br>  id INT PRIMARY KEY,<br>  table2_id INT REFERENCES table2(id)<br>);', 'Define table relationships', 'REFERENCES', 'Ensures data integrity')" class="cursor-pointer hover:text-emerald-800">Foreign Keys</li>
+            <li onclick="showCommandDetails('Combining Tables', 'SELECT * FROM table1<br>UNION [ALL]<br>SELECT * FROM table2;', 'Combine query results', 'UNION, UNION ALL', 'Same number/type of columns')" class="cursor-pointer hover:text-emerald-800">Combining Tables</li>
+          </ul>
+        </div>
+      </div>
+      <div id="node5" class="mindmap-node absolute" style="left:62%;top:20%;">
+        <div class="bg-white border-2 border-pink-400 rounded-lg shadow-md px-5 py-4 w-60 font-semibold text-pink-700">
+          <div>Modifying Data</div>
+          <ul class="text-base font-normal ml-4 list-disc mt-2 text-pink-700">
+            <li onclick="showCommandDetails('INSERT', 'INSERT INTO table (col1, col2)<br>VALUES (val1, val2);', 'Add new rows', 'INSERT INTO, VALUES', 'Can insert multiple rows')" class="cursor-pointer hover:text-pink-800">INSERT INTO</li>
+            <li onclick="showCommandDetails('UPDATE', 'UPDATE table<br>SET column = value<br>WHERE condition;', 'Modify existing rows', 'UPDATE, SET', 'WHERE clause recommended')" class="cursor-pointer hover:text-pink-800">UPDATE</li>
+            <li onclick="showCommandDetails('DELETE', 'DELETE FROM table<br>WHERE condition;', 'Remove rows', 'DELETE FROM', 'WHERE clause recommended')" class="cursor-pointer hover:text-pink-800">DELETE</li>
+          </ul>
+        </div>
+      </div>
+      <div id="node6" class="mindmap-node absolute" style="left:76%;top:45%;">
+        <div class="bg-white border-2 border-yellow-400 rounded-lg shadow-md px-5 py-4 w-60 font-semibold text-yellow-700">
+          <div>Advanced Queries</div>
+          <ul class="text-base font-normal ml-4 list-disc mt-2 text-yellow-700">
+            <li onclick="showCommandDetails('Subqueries', 'SELECT * FROM table1<br>WHERE column IN (SELECT column FROM table2);', 'Nested queries', 'Used in WHERE, FROM, SELECT', 'Can be correlated')" class="cursor-pointer hover:text-yellow-800">Subqueries</li>
+            <li onclick="showCommandDetails('CASE', 'SELECT column,<br>  CASE WHEN condition1 THEN result1<br>       WHEN condition2 THEN result2<br>       ELSE default<br>  END AS new_name<br>FROM table;', 'Conditional logic', 'CASE, WHEN, THEN, ELSE, END', 'Similar to IF-THEN-ELSE')" class="cursor-pointer hover:text-yellow-800">CASE Statements</li>
+            <li onclick="showCommandDetails('Window Functions', 'SELECT column,<br>  SUM(column) OVER (PARTITION BY group_column ORDER BY sort_column)<br>FROM table;', 'Perform calculations across rows', 'OVER, PARTITION BY', 'Includes RANK(), DENSE_RANK()')" class="cursor-pointer hover:text-yellow-800">Window Functions</li>
+          </ul>
+        </div>
+      </div>
+      <div id="node7" class="mindmap-node absolute" style="left:57%;top:70%;">
+        <div class="bg-white border-2 border-fuchsia-400 rounded-lg shadow-md px-5 py-4 w-60 font-semibold text-fuchsia-700">
+          <div>Best Practices & Learning</div>
+          <ul class="text-base font-normal ml-4 list-disc mt-2 text-fuchsia-700">
+            <li>Indexes & Performance</li>
+            <li>Security</li>
+            <li>Real Projects</li>
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- SVG connectors (drawn dynamically by JS for maintainability) -->
+  <svg id="svglines" class="connector" width="100%" height="900" style="top:0; left:0; position:absolute; z-index:1;"></svg>
+  
+<script>
+  // Connect center to each node
+  function getCenter(el) {
+    const rect = el.getBoundingClientRect();
+    return {
+      x: rect.left + rect.width/2 + window.scrollX,
+      y: rect.top + rect.height/2 + window.scrollY
+    };
+  }
+  function getEdgePoint(center, node, angle, distOffset=60) {
+    // angle in radians, returns a point on the edge of center node to draw a curved line
+    return {
+      x: center.x + Math.cos(angle)*distOffset,
+      y: center.y + Math.sin(angle)*distOffset,
+    };
+  }
+  function drawConnection(from, to, color) {
+    const svg = document.getElementById('svglines');
+    const centerPos = getCenter(document.getElementById(from));
+    const nodePos = getCenter(document.getElementById(to));
+    // Calculate a control point for a Bezier curve, to make lines curved outwards
+    const dx = nodePos.x - centerPos.x;
+    const dy = nodePos.y - centerPos.y;
+    const mx = centerPos.x + dx * 0.45 + dy * 0.09;
+    const my = centerPos.y + dy * 0.45 - dx * 0.09;
+    const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+    path.setAttribute('d', 
+      `M ${centerPos.x},${centerPos.y} Q ${mx},${my} ${nodePos.x},${nodePos.y}`
+    );
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width', "4");
+    path.setAttribute('fill', "none");
+    path.setAttribute('stroke-opacity', "0.35");
+    path.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(path);
+  }
+  function drawAllConnections() {
+    document.getElementById('svglines').innerHTML = '';
+    drawConnection('center', 'node1', "#a78bfa");
+    drawConnection('center', 'node2', "#6366f1");
+    drawConnection('center', 'node3', "#38bdf8");
+    drawConnection('center', 'node4', "#34d399");
+    drawConnection('center', 'node5', "#f472b6");
+    drawConnection('center', 'node6', "#fde047");
+    drawConnection('center', 'node7', "#e879f9");
+  }
+  function showCommandDetails(title, syntax, purpose, keyClauses, commonOperators) {
+    const details = `
+      <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+          <h3 class="text-xl font-bold text-indigo-700 mb-4">${title} Command Details</h3>
+          <div class="bg-indigo-50 p-4 rounded-lg mb-4">
+            <p class="font-mono text-indigo-900">${syntax}</p>
+          </div>
+          <div class="space-y-2 text-sm">
+            <p><span class="font-semibold">Purpose:</span> ${purpose}</p>
+            <p><span class="font-semibold">Key Clauses:</span> ${keyClauses}</p>
+            <p><span class="font-semibold">Common Operators:</span> ${commonOperators}</p>
+          </div>
+          <button onclick="document.querySelector('.fixed').remove()" 
+                  class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+            Close
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', details);
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    // Positioning handled via CSS for responsive scaling.
+    drawAllConnections();
+    window.addEventListener('resize', drawAllConnections);
+    window.addEventListener('scroll', drawAllConnections);
+  });
+</script>
+</body>
+</html>
+
